@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { Button, Form, FormControl, InputGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ErrorAlert from './ErrorAlert';
+import { useErrorContext } from './ErrorContext';
 
 function CityExplorer() {
     const [cityName, setCityName] = useState('');
     const history = useNavigate();
+    const { error, handleError, clearError } = useErrorContext();
 
     const handleInputChange = (event) => {
         setCityName(event.target.value);
@@ -47,6 +50,7 @@ function CityExplorer() {
               <Button variant="primary" type="submit">Explore!</Button>
             </InputGroup>
           </Form.Group>
+          {error && <ErrorAlert statusCode={error.statusCode} message={error.message} />}
         </Form>
       );
 }
