@@ -18,7 +18,7 @@ function CityExplorer() {
         event.preventDefault();
 
         try {
-            const response = await axios.get('https://us1.locationiq.com/v3/search.php', {
+            const response = await axios.get('https://us1.locationiq.com/v1/search', {
                 params: {
                     key: 'pk.4805ccba01b330989855f08a1d425e8b',
                     q: cityName,
