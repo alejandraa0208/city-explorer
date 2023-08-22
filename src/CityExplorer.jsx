@@ -7,7 +7,7 @@ import { useErrorContext } from './ErrorContext';
 
 function CityExplorer() {
     const [cityName, setCityName] = useState('');
-    const history = useNavigate();
+    const history = useNavigate(); // assistance from github search
     const { error, handleError, clearError } = useErrorContext();
 
     const handleInputChange = (event) => {
