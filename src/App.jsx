@@ -16,6 +16,7 @@ function App() {
     <Router>
       <Container className='mb-4'>
         <h1 className='mb-4'>Welcome to City Explorer!</h1>
+        <h2 className='mb-4'>Search location below</h2>
         <Routes>
           <Route path='/' element={<CityExplorer />} />
           <Route path='city-info/:cityName/:latitude/:longitude' element={<CityInfo />} />
