@@ -1,16 +1,12 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-import ErrorAlert from './ErrorAlert';
-import { useErrorContext } from './ErrorContext';
+import { useParams, Link } from 'react-router-dom';
 
-function CityInfo(props) {
+const CityInfo = () => {
     const { cityName, latitude, longitude } = useParams();
-    const { error } = useErrorContext;
 
     return (
-        <div className='mt-3'>
+        <div className='mt-4'>
             <h2>City Information</h2>
-            {error && <ErrorAlert statusCode={error.statusCode} message={error.message} />}
             <p><strong>City Name:</strong> {cityName}</p>
             <p><strong>Latitude:</strong> {latitude}</p>
             <p><strong>Longitude:</strong> {longitude}</p>
