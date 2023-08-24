@@ -10,7 +10,7 @@ const CityExplorerForm = ({ onCityExplorerSubmit }) => {
     event.preventDefault();
 
     try {
-      const apiKey = 'YOUR_ACCESS_TOKEN'; // Replace with your access token
+      const apiKey = 'pk.4805ccba01b330989855f08a1d425e8b';
       const response = await axios.get(
         `https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${city}&format=json`
       );
