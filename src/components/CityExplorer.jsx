@@ -10,7 +10,7 @@ const CityExplorerForm = ({ onCityExplorerSubmit }) => {
     event.preventDefault();
 
     try {
-      const apiKey = 'pk.4805ccba01b330989855f08a1d425e8b';
+      const apiKey = `${process.env.VITE_LOCATIONIQ_API_KEY}`;
       const response = await axios.get(
         `https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${city}&format=json`
       );
