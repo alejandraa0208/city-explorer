@@ -1,49 +1,41 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Form, Button, Alert } from 'react-bootstrap';
+import React from 'react';
+import weather from '../assets/weather.json';
 
-const CityExplorerForm = ({ onCityExplorerSubmit }) => {
-  const [city, setCity] = useState('');
-  const [error, setError] = useState(null);
+let API_KEY = import.meta.env.VITE_LOCATIONIQ_API_KEY;
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+class Explorer extends React.Component {
 
-    try {
-      const apiKey = `${process.env.VITE_LOCATIONIQ_API_KEY}`;
-      const response = await axios.get(
-        `https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${city}&format=json`
-      );
+  render() {
 
-      if (response.data.length > 0) {
-        const { lat, lon, display_name } = response.data[0];
-        onCityExplorerSubmit({ displayName: display_name, latitude: lat, longitude: lon });
-      } else {
-        setError('City not found');
-      }
-    } catch (error) {
-      setError('Error fetching city data');
-    }
-  };
+    let { location } = this.props;  
+    let lat = location ? location.lat : '';
+    let lon = location ? location.lon : '';
 
-  return (
-    <Form onSubmit={handleSubmit} className="mt-4">
-      <Form.Group controlId="cityInput">
-        <Form.Label>Enter City Name:</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="City Name"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Explore!
-      </Button>
-      {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
-    </Form>
-  );
-};
+    
+    let staticMapUrl = `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${lat},${lon}$zoom=9`;
 
-export default CityExplorerForm;
+    return (
+      <main>
+        <section>
+          <h2>Maps</h2>
+          <p>{this.props.query}</p>
+          <p>City: {location ? location.display_name : 'No location set'}</p>
+          <p>MAP PLACEHOLDER</p>
+          <img src={location ? staticMapUrl : "https://placehold.co/600x400" }alt="" />
+        </section>
+        <section>
+          <ul>
+          {weather.data.map((dailyForcast, index) => (
+            <li key={index}>
+              <p>{dailyForcast.datetime}</p>
+              <p>{dailyForcast.temp}</p>
+            </li>
+          ))}
+          </ul>
+        </section>
+      </main>
+    )
+  }
+}
+
+export default CityExplorer;

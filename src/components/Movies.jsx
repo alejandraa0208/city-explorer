@@ -1,44 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
-import { Alert } from 'react-bootstrap';
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-function Movies() {
-  const [movies, setMovies] = useState([]);
-  const [error, setError] = useState(null);
+class Movies extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            movies: [],
+            error: null,
+        }
+    }
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/movies');
-        setMovies(response.data);
-      } catch (error) {
-        setError('Error fetching movie data');
-      }
-    };
+    componentDidMount = () => {
+        this.handleMovies();
+    }
 
-    fetchMovies();
-  }, []);
+    handleMovies = async () => {
 
-  return (
-    <div className="mt-4">
-      <h2>Movies</h2>
-      {error ? (
-        <Alert variant="danger">{error}</Alert>
-      ) : (
-        <div className="card">
-          <ul className="list-group list-group-flush">
-            {movies.map((movie) => (
-              <li className="list-group-item" key={movie.id}>
-                <h5>{movie.title}</h5>
-                <p>Release Year: {movie.release_year}</p>
-                {/* Add more movie details here */}
-              </li>
+        axios.get(`${SERVER_URL}/movies?city=${this.props.searchQuery}`)
+        .then(response => {
+            this.setState({ movies: response.data });
+        })
+        .catch(error => {
+            console.error('Unable to provide movie', error);
+            this.setState({ error: error.message });
+        });
+    }
+
+    render() {
+        let { movies } = this.state;
+        console.log(this.state);
+        return (
+          <div>
+            <h2>Movies For Your City</h2>
+            {movies.map((movie, idx) => (
+              <div key={idx} className="card">
+                <img src={movie.image_url} className="card-img-top" alt={movie.title} />
+                <div className="card-body">
+                  <h5 className="card-title">{movie.title}</h5>
+                  <p className="card-text">{movie.description}</p>
+                </div>
+              </div>
             ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
+          </div>
+        );
+    }
 }
 
 export default Movies;
