@@ -1,9 +1,9 @@
 import React from 'react';
-import weather from '../assets/weather.json';
+import weatherData from '../assets/weather.json';
 
 let API_KEY = import.meta.env.VITE_LOCATIONIQ_API_KEY;
 
-class Explorer extends React.Component {
+class CityExplorer extends React.Component {
 
   render() {
 
@@ -25,12 +25,16 @@ class Explorer extends React.Component {
         </section>
         <section>
           <ul>
-          {weather.data.map((dailyForcast, index) => (
-            <li key={index}>
-              <p>{dailyForcast.datetime}</p>
-              <p>{dailyForcast.temp}</p>
-            </li>
-          ))}
+          {weatherData && weatherData.data ? (
+              weatherData.data.map((dailyForecast, index) => (
+                <li key={index}>
+                  <p>{dailyForecast.datetime}</p>
+                  <p>{dailyForecast.temp}</p>
+                </li>
+              ))
+            ) : (
+              <li>No weather data available</li>
+            )}
           </ul>
         </section>
       </main>

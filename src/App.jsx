@@ -62,11 +62,11 @@ class App extends React.Component {
           <form onSubmit={this.handleSearch}>
             <input placeholder="Begin your search" type="text" name="city" onChange={this.handleChange} />
             <button type='submit'>
-              Search
+              Explore!
             </button>
           </form>
           <CityExplorer location={this.state.location} query={this.state.searchQuery} />
-          {this.state.movies.length > 0 && <Movies movies={this.state.movies} />}
+          {this.state.movies && this.state.movies.length > 0 && <Movies movies={this.state.movies} />}
         {this.state.error
           ? (
             <h2>
