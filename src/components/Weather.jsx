@@ -1,23 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Alert } from 'react-bootstrap';
+import React from "react";
+import axios from "axios";
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-function Weather() {
-  const [forecastData, setForecastData] = useState([]);
-  const [error, setError] = useState(null);
+class Weather extends React.Component {
+  constructor() {}
+}
 
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/weather');
-        setForecastData(response.data);
-      } catch (error) {
-        setError('Error fetching weather data');
-      }
-    };
-
-    fetchWeather();
-  }, []);
+const Weather = ({ forecastData }) => {
 
   return (
     <div className="mt-4">
@@ -39,7 +28,15 @@ function Weather() {
       )}
     </div>
   );
-}
+};
+axios.get(`${SERVER_URL}/weather?lat=${lat}&lon=${lon}`)
+.then(response => {
+  this.setState({forecastData: response.data});
+})
+.catch(error => {
+  console.error('Cannot load forecast', error)
+});
+
 
 export default Weather;
 
