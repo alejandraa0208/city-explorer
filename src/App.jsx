@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import CityExplorer from './src/CityExplorer';
-import CityInfo from './src/CityInfo';
-import Movies from './src/Movies';
-import Weather from './src/Weather';
+import CityExplorer from './CityExplorer';
+import CityInfo from './CityInfo';
+import Movies from './Movies';
+import Weather from './Weather';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
+
 
 
 function App() {
