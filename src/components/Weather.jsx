@@ -3,6 +3,18 @@ import axios from "axios";
 import { Alert } from 'react-bootstrap'; 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
+class WeatherDay extends Component {
+  render() {
+    const { date, temperature } = this.props;
+    return (
+      <li className="list-group-item">
+        <p>Date: {date}</p>
+        <p>Temperature: {temperature}°C</p>
+      </li>
+    );
+  }
+}
+
 class Weather extends Component {
   constructor(props) {
     super(props);
@@ -35,11 +47,11 @@ class Weather extends Component {
           <div className="card">
             <ul className="list-group list-group-flush">
               {forecastData.map((data, index) => (
-                <li className="list-group-item" key={index}>
-                  <p>Date: {data.date}</p>
-                  <p>Temperature: {data.temperature}°C</p>
-                  {/* Might add more weather deets here */ }
-                </li>
+                <WeatherDay
+                key={index}
+                date={data.date}
+                temperature={data.temperature}
+                />
               ))}
             </ul>
           </div>
